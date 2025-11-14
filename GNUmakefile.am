@@ -1,0 +1,20 @@
+EXTRA_DIST = autogen.sh tar.1 Makefile.mk tar.dfl
+
+bin_PROGRAMS = tar
+
+included_libcommon = heirloom-libcommon
+if BUILD_LIBCOMMON
+  OPT_LIBCOMMON = $(included_libcommon)
+endif
+libcommon_prefix  = @libcommon_prefix@
+libcommon_include = @libcommon_include@
+libcommon_lib     = @libcommon_lib@
+
+SUBDIRS = $(OPT_LIBCOMMON)
+DIST_SUBDIRS = $(included_libcommon)
+
+tar_CPPFLAGS  = -I$(libcommon_include)
+tar_LDFLAGS = -L$(libcommon_lib)
+tar_LDADD   = -lcommon 
+
+tar_SOURCES = tar.c
