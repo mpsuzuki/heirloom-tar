@@ -45,6 +45,10 @@
 #endif
 static const char sccsid[] USED = "@(#)tar.sl	1.180 (gritter) 10/9/10";
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <sys/types.h>
 #include <sys/stat.h>
 #ifdef	__linux__
@@ -96,13 +100,11 @@ static const char sccsid[] USED = "@(#)tar.sl	1.180 (gritter) 10/9/10";
 #include <sys/st01.h>
 #endif	/* SVR4.2MP */
 
-#ifdef	_AIX
+#if MAJOR_IN_SYSMACROS
 #include <sys/sysmacros.h>
-#endif
-
-#if !defined (major) && !defined (__G__)
+#elif MAJOR_IN_MKDEV
 #include <sys/mkdev.h>
-#endif	/* !major */
+#endif
 
 #include <getdir.h>
 #include <asciitype.h>
@@ -703,7 +705,15 @@ dorep(char *argv[])
 				dup2(fileno(tfile), 0);
 				dup2(tfd, 1);
 				execl(SHELL, "sh", "-c",
+#if defined( SV3BIN ) && defined( DEFBIN )
 					"PATH=" SV3BIN ":" DEFBIN ":$PATH; "
+#elif defined( DEFBIN )
+					"PATH=" DEFBIN ":$PATH; "
+#elif defined( SV3BIN ) /* irregular */
+					"PATH=" SV3BIN ":$PATH; "
+#else
+					"PATH=:$PATH; "
+#endif
 					"LC_ALL=C export LC_ALL; "
 					/*
 					 * +2 sorts by file name first, for
