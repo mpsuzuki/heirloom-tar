@@ -73,10 +73,10 @@ static const char sccsid[] USED = "@(#)tar.sl	1.180 (gritter) 10/9/10";
 #include <utime.h>
 #include <stdio.h>
 #include <dirent.h>
-#if HAVE_WRAP_SIGSET_H
+#if defined( HAVE_WRAP_SIGSET_H ) && HAVE_WRAP_SIGSET_H > 0
 # include "wrap-sigset.h"
 # include <signal.h>
-#elif HAVE_SIGSET_H
+#elif defined( HAVE_SIGSET_H ) && HAVE_SIGSET_H > 0
 # include <signal.h>
 # include "sigset.h"
 #endif
