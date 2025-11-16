@@ -44,27 +44,6 @@ then
                      [pathname of setting file for "tar" default values])
 fi
 
-
-# Checks for <signal.h> and sigset()
-AC_CHECK_HEADER([signal.h],[],[AC_MSG_ERROR([signal.h is required])])
-AC_CHECK_DECL([sigset],[],[],[#include <signal.h>])
-if test x${ac_cv_have_decl_sigset} != xyes
-then
-  AC_MSG_CHECKING([-D_XOPEN_SOURCE=500 enables the declaration of sigset()])
-  AC_COMPILE_IFELSE([AC_LANG_SOURCE([
-#define _XOPEN_SOURCE 500
-#include <signal.h>
-],[
-  sigset(0, SIG_DFL);
-])],[
-    AC_MSG_RESULT([yes])
-    CFLAGS="${CFLAGS} -D_XOPEN_SOURCE=500"
-  ],[
-    AC_MSG_ERROR([no])
-  ])
-fi
-AC_CHECK_FUNC([sigset],[],[AC_MSG_ERROR([sigset() is required])])
-
 # Pack included heirloom-libXXX in make dist, subdirectories must be configured always.
 AC_CONFIG_SUBDIRS([heirloom-libcommon])
 
