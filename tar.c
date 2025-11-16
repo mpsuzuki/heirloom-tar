@@ -1931,7 +1931,8 @@ tomodes(const char *name, register struct stat *sp)
 			(long long)sp->st_size&077777777777LL : 0LL);
 	sprintf(dblock.dbuf.mtime, "%11.11lo", (long)sp->st_mtime);
 	if (oldflag <= 0) {
-		strcpy(dblock.dbuf.magic, gnuflag>0 ? "ustar  " : "ustar");
+		memcpy(dblock.dbuf.magic, gnuflag>0 ? "ustar " : "ustar", 6);
+		if (gnuflag > 0) memcpy(dblock.dbuf.version, " ", 2);
 		if (gnuflag <= 0)
 			dblock.dbuf.version[0] = dblock.dbuf.version[1] = '0';
 		if ((cp = getuser(sp->st_uid)) != NULL)
