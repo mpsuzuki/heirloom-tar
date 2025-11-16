@@ -44,10 +44,11 @@ then
                      [pathname of setting file for "tar" default values])
 fi
 
-# Pack included heirloom-libXXX in make dist, subdirectories must be configured always.
-AC_CONFIG_SUBDIRS([heirloom-libcommon])
-
 HEIRLOOM_FIND_LIBCOMMON
+
+AS_IF([ test "x${build_included_libcommon}" = xyes ],
+      [ AC_CONFIG_SUBDIRS([heirloom-libcommon]) ])
+
 
 AC_HEADER_MAJOR
 
