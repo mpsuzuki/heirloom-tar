@@ -52,6 +52,26 @@ AS_IF([ test "x${build_included_libcommon}" = xyes ],
 
 AC_HEADER_MAJOR
 
+AC_CHECK_HEADER([malloc.h],[
+  AC_DEFINE([HAVE_MALLOC_H],[1],[Define to 1 if you have <malloc.h> header file.])
+],[
+  AC_CHECK_DECL([malloc],[
+    AC_DEFINE([HAVE_STDLIB_H_MALLOC],[1],[Define to 1 if stdlib.h declares malloc().])
+  ],[
+    AC_MSG_ERROR([could not find a header file to declare malloc()])
+  ],[#include <stdlib.h>])
+])
+
+AC_CHECK_HEADER([alloca.h],[
+  AC_DEFINE([HAVE_ALLOCA_H],[1],[Define to 1 if you have <alloca.h> header file.])
+],[
+  AC_CHECK_DECL([alloca],[
+    AC_DEFINE([HAVE_STDLIB_H_ALLOCA],[1],[Define to 1 if stdlib.h declares alloca().])
+  ],[
+    AC_MSG_ERROR([could not find a header file to declare alloca()])
+  ],[#include <stdlib.h>])
+])
+
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_FILES([GNUmakefile])
 AC_OUTPUT
