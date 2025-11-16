@@ -82,7 +82,9 @@ static const char sccsid[] USED = "@(#)tar.sl	1.180 (gritter) 10/9/10";
 #endif
 #include <string.h>
 #include <stdlib.h>
+#if defined( HAVE_MALLOC_H ) && HAVE_MALLOC_H > 0
 #include <malloc.h>
+#endif
 #include <libgen.h>
 #include <errno.h>
 #include <pwd.h>
@@ -90,7 +92,9 @@ static const char sccsid[] USED = "@(#)tar.sl	1.180 (gritter) 10/9/10";
 #include <inttypes.h>
 #include <iblok.h>
 #include <locale.h>
+#if defined( HAVE_ALLOCA_H ) && HAVE_ALLOCA_H > 0
 #include <alloca.h>
+#endif
 
 #include <sys/ioctl.h>
 
